@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_to_text_app/feature/home/data/models/track_list_state_model.dart';
 import 'package:image_to_text_app/core/injector.dart' as di;
-import 'package:image_to_text_app/feature/home/presentation/cubit/tracks_cubit.dart';
-import 'package:image_to_text_app/utils/ext.dart';
 
 import '../domain/entities/artist_base_info_entity.dart';
 
@@ -18,8 +14,6 @@ class ArtistInfoPage extends StatefulWidget {
 }
 
 class _ArtistInfoPageState extends State<ArtistInfoPage> {
-  late TracksCubit cubit;
-
   @override
   void initState() {
     super.initState();
@@ -27,8 +21,6 @@ class _ArtistInfoPageState extends State<ArtistInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    cubit = di.getIt<TracksCubit>()
-      ..fetchArtistTrackList(widget.artist.tracklist);
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.artist.name}'),
@@ -39,56 +31,6 @@ class _ArtistInfoPageState extends State<ArtistInfoPage> {
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.05),
             Text("${widget.artist.name}'s tracks:"),
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.05),
-            BlocBuilder<TracksCubit, TracksState>(
-              builder: (context, state) {
-                final trackList = state.trackListStateModel;
-                return switch (trackList?.trackListState) {
-                  TrackListState.initial => const SizedBox.shrink(),
-                  TrackListState.loading => const Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  TrackListState.loaded => ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: trackList?.trackListData?.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final title = trackList
-                            ?.trackListData?[index].titleShort
-                            .toString();
-                        final duration = trackList?.trackListData?[index]
-                            .duration?.toMinutesRepresentation;
-
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: ListTile(
-                                  title: Text(
-                                    title!.contains('(')
-                                        ? title.substring(0, title.indexOf('('))
-                                        : title,
-                                    maxLines: 2,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  subtitle: Text(duration ?? ''),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  TrackListState.error => Center(
-                      child: Text(trackList?.message ?? ''),
-                    ),
-                  null => const SizedBox.shrink(),
-                };
-              },
-            ),
           ],
         ),
       ),

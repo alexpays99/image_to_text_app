@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:image_to_text_app/feature/home/presentation/cubit/artist_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_to_text_app/core/injector.dart' as di;
-import 'package:image_to_text_app/feature/home/presentation/widgets/artist_widget.dart';
 
 import '../../data/models/artist_list_state_model.dart';
 
@@ -14,29 +13,13 @@ class ArtistList extends StatefulWidget {
 }
 
 class _ArtistListState extends State<ArtistList> {
-  late ScrollController _scrollController;
   late ArtistCubit _artistCubit;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
     _artistCubit = di.getIt<ArtistCubit>();
-    _artistCubit.fetchArtists();
-    _scrollController.addListener(_onScroll);
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      _artistCubit.fetchArtists();
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+    _artistCubit.describeImage('');
   }
 
   @override
@@ -44,34 +27,13 @@ class _ArtistListState extends State<ArtistList> {
     return BlocBuilder<ArtistCubit, ArtistState>(
       builder: (context, state) {
         final artistList = state.artistListStateModel;
-        final newArtistsList = _artistCubit.newArtists;
         switch (artistList?.artistListState) {
           case ListState.initial:
             return const SizedBox.shrink();
           case ListState.loading:
-            return newArtistsList == [] || newArtistsList.isEmpty
-                ? const Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    controller: _scrollController,
-                    itemCount: newArtistsList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Artist(
-                        artist: newArtistsList[index],
-                        index: index,
-                      );
-                    },
-                  );
+            return const Center(child: CircularProgressIndicator());
           case ListState.loaded:
-            return ListView.builder(
-              controller: _scrollController,
-              itemCount: newArtistsList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Artist(
-                  artist: newArtistsList[index],
-                  index: index,
-                );
-              },
-            );
+            return const Text('Text');
           case ListState.error:
             return Center(
               child: Text(artistList?.message ?? ''),

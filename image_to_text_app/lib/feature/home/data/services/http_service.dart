@@ -1,21 +1,29 @@
 import 'package:dartz/dartz.dart';
-import 'package:image_to_text_app/feature/home/domain/entities/artist_base_info_entity.dart';
+import 'package:logger/logger.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../../../../core/domain/entities/failure.dart';
 import '../models/artist_list_track/datum.dart';
 
-class HttpService {
-  HttpService();
+class AIGenerativeService {
+  AIGenerativeService();
 
-  // final Dio dio;
   final logger = Logger();
+  final model = GenerativeModel(
+    model: 'gemini-pro',
+    apiKey: const String.fromEnvironment("API_KEY").toString(),
+  );
 
-  Future<Either<Failure, List<ArtistBaseInfoEntity>>> fetchArtists(
-      int startIndex) async {
+  Future<Either<Failure, String>> describeImage(
+      String base64ImageFormat) async {
+    const prompt = 'Explain what is flutter in short';
+    final content = [Content.text(prompt)];
     try {
-      logger.d('');
-      return right([]);
+      final response = await model.generateContent(content);
+      logger.d('MODEL RESPONCE: ${response.text}');
+      return right(response.text ?? '');
     } catch (e) {
+      logger.d('MODEL EXCEPTION: $e');
       return left(throw Exception(e));
     }
   }

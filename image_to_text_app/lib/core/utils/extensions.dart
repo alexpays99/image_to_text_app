@@ -10,7 +10,7 @@ extension IntExtension on int {
 
 extension StringExtension on String {
   String get toInitialsRepresentation {
-    List<String> words = this.split(" ");
+    List<String> words = split(" ");
     String initials = "";
     for (var word in words) {
       initials += word[0];
