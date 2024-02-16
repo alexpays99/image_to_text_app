@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_to_text_app/core/injector.dart';
 import 'core/injector.dart' as di;
-import 'feature/home/presentation/cubit/artist_cubit.dart';
+import 'feature/home/presentation/cubit/home_cubit.dart';
 import 'navigation/go_rounter.dart';
 
 final _router = di.getIt.get<GoRouterNavigation>().initGoRoute();
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => getIt<ArtistCubit>(),
+          create: (context) => getIt<HomeCubit>(),
         ),
       ],
       child: MaterialApp.router(

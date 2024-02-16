@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/domain/entities/failure.dart';
-import '../services/http_service.dart';
+import '../services/ai_generative_service.dart';
 
 abstract class RemoteDataSource {
   Future<Either<Failure, String>> describeImage(String base64ImageFormat);

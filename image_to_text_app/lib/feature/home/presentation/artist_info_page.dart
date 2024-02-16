@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_to_text_app/core/injector.dart' as di;
+import 'package:image_picker/image_picker.dart';
 
 import '../domain/entities/artist_base_info_entity.dart';
 

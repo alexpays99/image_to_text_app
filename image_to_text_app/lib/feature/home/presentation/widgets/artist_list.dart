@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_to_text_app/feature/home/presentation/cubit/artist_cubit.dart';
+import 'package:image_to_text_app/feature/home/presentation/cubit/home_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_to_text_app/core/injector.dart' as di;
 
-import '../../data/models/artist_list_state_model.dart';
+import '../../data/models/picker_state_model.dart';
 
 class ArtistList extends StatefulWidget {
   const ArtistList({super.key});
@@ -13,21 +13,21 @@ class ArtistList extends StatefulWidget {
 }
 
 class _ArtistListState extends State<ArtistList> {
-  late ArtistCubit _artistCubit;
+  late HomeCubit _artistCubit;
 
   @override
   void initState() {
     super.initState();
-    _artistCubit = di.getIt<ArtistCubit>();
+    _artistCubit = di.getIt<HomeCubit>();
     _artistCubit.describeImage('');
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ArtistCubit, ArtistState>(
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        final artistList = state.artistListStateModel;
-        switch (artistList?.artistListState) {
+        final artistList = state.pickerStateModel;
+        switch (artistList?.pickerState) {
           case ListState.initial:
             return const SizedBox.shrink();
           case ListState.loading:
@@ -36,7 +36,7 @@ class _ArtistListState extends State<ArtistList> {
             return const Text('Text');
           case ListState.error:
             return Center(
-              child: Text(artistList?.message ?? ''),
+              child: Text(artistList?.errorMessage ?? ''),
             );
           default:
             return const SizedBox.shrink();

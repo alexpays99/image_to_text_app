@@ -9,8 +9,8 @@ import 'router_paths.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'Home');
-// final _sectionNavigatorFavouriteKey =
-//     GlobalKey<NavigatorState>(debugLabel: 'Favourite');
+final _sectionNavigatorFavouriteKey =
+    GlobalKey<NavigatorState>(debugLabel: 'Favourite');
 
 class GoRouterNavigation {
   GoRouter initGoRoute() {
@@ -50,27 +50,27 @@ class GoRouterNavigation {
                 ),
               ],
             ),
-            // StatefulShellBranch(
-            //   navigatorKey: _sectionNavigatorFavouriteKey,
-            //   routes: [
-            //     GoRoute(
-            //       path: RoutePaths.favourite,
-            //       name: RoutePaths.favourite,
-            //       pageBuilder: (context, state) => const NoTransitionPage(
-            //         child: FavouritePage(),
-            //       ),
-            //       routes: <RouteBase>[
-            //         GoRoute(
-            //           path: RoutePaths.favouriteInfo,
-            //           name: RoutePaths.favouriteInfo,
-            //           pageBuilder: (context, state) => const NoTransitionPage(
-            //             child: FavouriteInfoPage(),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
+            StatefulShellBranch(
+              navigatorKey: _sectionNavigatorFavouriteKey,
+              routes: [
+                GoRoute(
+                  path: RoutePaths.favourite,
+                  name: RoutePaths.favourite,
+                  pageBuilder: (context, state) => const NoTransitionPage(
+                      child: Placeholder() // FavouritePage(),
+                      ),
+                  routes: <RouteBase>[
+                    GoRoute(
+                      path: RoutePaths.favouriteInfo,
+                      name: RoutePaths.favouriteInfo,
+                      pageBuilder: (context, state) => const NoTransitionPage(
+                          child: Placeholder() //FavouriteInfoPage(),
+                          ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ],
