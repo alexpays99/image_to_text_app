@@ -6,9 +6,7 @@ import 'package:image_to_text_app/core/injector.dart' as di;
 import 'package:image_to_text_app/feature/home/presentation/cubit/tracks_cubit.dart';
 import 'package:image_to_text_app/utils/ext.dart';
 
-import '../../favourite/data/models/favourite_track_model.dart';
 import '../domain/entities/artist_base_info_entity.dart';
-import 'widgets/add_to_favourite_button.dart';
 
 class ArtistInfoPage extends StatefulWidget {
   const ArtistInfoPage({super.key, required this.artist});
@@ -77,13 +75,6 @@ class _ArtistInfoPageState extends State<ArtistInfoPage> {
                                     ),
                                   ),
                                   subtitle: Text(duration ?? ''),
-                                  trailing: AddToFavouriteButton(
-                                    track: FavouriteTrackModel
-                                        .fromRemoteTrackModel(
-                                      trackList!.trackListData![index],
-                                    ),
-                                    index: index,
-                                  ),
                                 ),
                               ),
                             ],

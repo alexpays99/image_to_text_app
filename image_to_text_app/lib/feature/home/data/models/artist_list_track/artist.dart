@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../favourite/data/models/saved_track_model/artist_local.dart';
-
 part 'artist.freezed.dart';
 part 'artist.g.dart';
 

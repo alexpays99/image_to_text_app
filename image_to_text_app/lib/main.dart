@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_to_text_app/core/injector.dart';
 import 'package:image_to_text_app/feature/home/presentation/cubit/tracks_cubit.dart';
 import 'core/injector.dart' as di;
-import 'feature/favourite/presentation/cubit/favourite_tracks_list_cubit.dart';
 import 'feature/home/presentation/cubit/artist_cubit.dart';
 import 'navigation/go_rounter.dart';
 
@@ -26,9 +25,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt<TracksCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<FavouriteTracksListCubit>(),
         ),
       ],
       child: MaterialApp.router(
